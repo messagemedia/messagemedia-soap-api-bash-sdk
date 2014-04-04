@@ -1,2 +1,2 @@
-messagemedia-shell
+messagemedia-bash
 ==================
