@@ -6,6 +6,8 @@
 # detailed usage information.
 #
 
+. "$(dirname $(readlink -f $0))/auth.inc.sh"
+
 # Some defaults.
 ENDPOINT='https://soap.m4u.com.au'
 
@@ -18,15 +20,6 @@ showUsage() {
     echo -e "\nUsage: "`basename $0`" [--debug] [--dryrun]\n" >&2
     exit 128
 }
-
-# TODO: Prompt for these?
-if [ -z "$MESSAGEMEDIA_USERID" ]; then
-    echo -e "\nError: MESSAGEMEDIA_USERID environment variable not set." >&2
-    showUsage
-elif [ -z "$MESSAGEMEDIA_PASSWORD" ]; then
-    echo -e "\nError: MESSAGEMEDIA_PASSWORD environment variable not set." >&2
-    showUsage
-fi
 
 while [ $# -gt 0 ]; do
     case "$1" in

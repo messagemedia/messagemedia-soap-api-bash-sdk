@@ -15,6 +15,8 @@
 #   --content
 #   --endpoint
 
+. "$(dirname $(readlink -f $0))/auth.inc.sh"
+
 # Some defaults.
 ENDPOINT='https://soap.m4u.com.au'
 MESSAGE_FORMAT='SMS'
@@ -57,15 +59,6 @@ requireOneOf() {
     echo -e "\nError: Option '$OPTION_NAME' does not accept the parameter '$OPTION_ARG'." >&2
     return 1
 }
-
-# TODO: Prompt for these?
-if [ -z "$MESSAGEMEDIA_USERID" ]; then
-    echo -e "\nError: MESSAGEMEDIA_USERID environment variable not set." >&2
-    showUsage
-elif [ -z "$MESSAGEMEDIA_PASSWORD" ]; then
-    echo -e "\nError: MESSAGEMEDIA_PASSWORD environment variable not set." >&2
-    showUsage
-fi
 
 if [ "$1" = '--send-mode' ]; then
     requireArg $1 $#
