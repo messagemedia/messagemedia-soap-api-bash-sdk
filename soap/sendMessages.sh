@@ -6,9 +6,6 @@
 # detailed usage information.
 #
 
-# @todo
-#   --tag
-
 . "$(dirname $(readlink -f $0))/auth.inc.sh"
 . "$(dirname $(readlink -f $0))/functions.inc.sh"
 
@@ -65,7 +62,7 @@ while [ $# -gt 0 ]; do
             shift
             ;;
         --format)
-            requireArg
+            requireArg $1 $#
             requireOneOf "$1" "$2" SMS voice
             MESSAGE_FORMAT="$2"
             shift
@@ -86,6 +83,12 @@ while [ $# -gt 0 ]; do
         --send-mode)
             echo -e "\nError: If present, --sendMode must be the first option specified."
             showUsage
+            ;;
+        --tag)
+            requireArg $1 $(( $# - 1 ))
+            TAG_VALUE=`echo "$3" | "$SED" -e 's/&/\&amp;/g' -e 's/</\&lt;/g' -e 's/>/\&gt;/g'`
+            TAGS+=( "<ns:tag name=\"$SAFE_ARG\">$TAG_VALUE</ns:tag>" )
+            shift 2
             ;;
         --validity-period)
             requireArg $1 $#
@@ -117,12 +120,20 @@ while [ $# -gt 0 ]; do
             if [ -n "$SCHEDULED" ]; then
                 MESSAGE+="      <ns:scheduled>$SCHEDULED</ns:scheduled>$LF"
             fi
+            if [ ${#TAGS[@]} -gt 0 ]; then
+                MESSAGE+="       <ns:tags>$LF"
+                for TAG in "${TAGS[@]}"; do
+                    MESSAGE+="        $TAG$LF"
+                done
+                MESSAGE+="       </ns:tags>$LF"
+            fi
             if [ -n "$VALIDITY_PERIOD" ]; then
                 MESSAGE+="      <ns:validityPeriod>$VALIDITY_PERIOD</ns:validityPeriod>$LF"
             fi
             MESSAGE+="      <ns:content>$SAFE_ARG</ns:content>$LF     </ns:message>$LF"
             unset HAVE_TRAILING_OPTIONS
             unset RECIPIENTS
+            unset TAGS
             MESSAGES+=( "$MESSAGE" )
             SEQUENCE_NUMBER=$(( $SEQUENCE_NUMBER + 1 ))
             shift
