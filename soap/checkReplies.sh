@@ -31,6 +31,9 @@ while [ $# -gt 0 ]; do
         --dryrun|--dry-run)
             DRYRUN=true
             ;;
+        --help)
+            showUsage
+            ;;
         --max-replies)
             requireArg $1 $#
             MAXIMUM_REPLIES="$SAFE_ARG"

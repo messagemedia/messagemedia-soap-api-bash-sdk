@@ -29,6 +29,9 @@ while [ $# -gt 0 ]; do
         --dryrun|--dry-run)
             DRYRUN=true
             ;;
+        --help)
+            showUsage
+            ;;
         *)
             echo -e "\nError: Unknown option '$1'." >&2
             showUsage
