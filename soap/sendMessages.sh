@@ -7,7 +7,6 @@
 #
 
 # @todo
-#   --first-recipient-id
 #   --recipient
 #   --scheduled
 #   --tag
@@ -27,7 +26,6 @@ SEQUENCE_NUMBER=0
 # Paths to required commands.
 CURL=`which curl`
 SED=`which sed`
-LF=$'\n'
 
 # Show a basic, standardise usage message.
 showUsage() {
@@ -42,26 +40,9 @@ if [ "$1" = '--send-mode' ]; then
     shift 2
 fi
 
-CHARSET=`echo ${LANG} | ${SED} 's/^.*\.//' | tr 'A-Z' 'a-z-'`
-
-SOAP_REQUEST="<?xml version=\"1.0\" encoding=\"$CHARSET\"?>
-<env:Envelope xmlns:env=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:ns=\"http://xml.m4u.com.au/2009\">
- <env:Body>
-  <ns:sendMessages>
-   <ns:authentication>
-    <ns:userId>$MESSAGEMEDIA_USERID</ns:userId>
-    <ns:password>$MESSAGEMEDIA_PASSWORD</ns:password>
-   </ns:authentication>
-   <ns:requestBody>
-    <ns:messages"
-if [ -n "$SEND_MODE" ]; then
-    SOAP_REQUEST="$SOAP_REQUEST sendMode=\"$SEND_MODE\"";
-fi
-SOAP_REQUEST="$SOAP_REQUEST>"
-
 while [ $# -gt 0 ]; do
     HAVE_TRAILING_OPTIONS=true
-    SAFE_ARG=`echo "$2" | "$SED" -e 's/&/\&amp;/g' -e 's/</\&lt;/g' -e 's/>/\&gt;/g'`
+    SAFE_ARG=`echo "$2" | "$SED" -e 's/&/\&amp;/g' -e 's/</\&lt;/g' -e 's/>/\&gt;/g' -e 's/"/\&quot;/g'`
     case "$1" in
         -d|--delivery-report)
             if [[ "$2" = 'true' || "$2" = 'false' ]]; then
@@ -90,26 +71,41 @@ while [ $# -gt 0 ]; do
         --help)
             showUsage
             ;;
+        --recipient-id)
+            requireArg $1 $#
+            RECIPIENT_ID="$SAFE_ARG"
+            shift
+            ;;
         --send-mode)
             echo -e "\nError: If present, --sendMode must be the first option specified."
             showUsage
             ;;
         -t|--to|--recipient)
             requireArg $1 $#
-            RECIPIENTS="$RECIPIENTS       <ns:recipient uid=\"$RECIPIENT_ID\">$SAFE_ARG</ns:recipient>$LF"
+            RECIPIENTS[$RECIPIENT_ID]="$SAFE_ARG"
             RECIPIENT_ID=$(( $RECIPIENT_ID + 1 ));
             shift
             ;;
         -c|-m|--content|--message)
             requireArg $1 $#
-            SOAP_REQUEST="$SOAP_REQUEST$LF     <ns:message format=\"SMS\" sequenceNumber=\"$SEQUENCE_NUMBER\">"
-            SOAP_REQUEST="$SOAP_REQUEST$LF      <ns:recipients>$LF$RECIPIENTS      </ns:recipients>"
-            if [ -n "$DELIVERY_REPORT" ]; then
-                SOAP_REQUEST=$"$SOAP_REQUEST$LF      <ns:deliverReport>$DELIVERY_REPORT</ns:deliverReport>"
+            if [ ${#RECIPIENTS[@]} -eq 0 ]; then
+                echo
+                echo "Error: No recipient(s) for message '$2'."
+                showUsage
             fi
-            SOAP_REQUEST=$"$SOAP_REQUEST$LF      <ns:content>$SAFE_ARG</ns:content>$LF     </ns:message>"
-            HAVE_TRAILING_OPTIONS=''
-            RECIPIENTS=''
+            LF=$'\n'
+            MESSAGE="     <ns:message format=\"SMS\" sequenceNumber=\"$SEQUENCE_NUMBER\">$LF      <ns:recipients>$LF"
+            for RECIPIENT_ID in "${!RECIPIENTS[@]}"; do
+                MESSAGE+="       <ns:recipient uid=\"$RECIPIENT_ID\">${RECIPIENTS[$RECIPIENT_ID]}</ns:recipient>$LF"
+            done
+            MESSAGE+="      </ns:recipients>$LF"
+            if [ -n "$DELIVERY_REPORT" ]; then
+                MESSAGE+="<ns:deliverReport>$DELIVERY_REPORT</ns:deliverReport>$LF"
+            fi
+            MESSAGE+="      <ns:content>$SAFE_ARG</ns:content>$LF     </ns:message>$LF"
+            unset HAVE_TRAILING_OPTIONS
+            unset RECIPIENTS
+            MESSAGES+=( "$MESSAGE" )
             SEQUENCE_NUMBER=$(( $SEQUENCE_NUMBER + 1 ))
             shift
             ;;
@@ -121,8 +117,29 @@ while [ $# -gt 0 ]; do
     shift
 done
 
-SOAP_REQUEST="$SOAP_REQUEST
-    </ns:messages>
+CHARSET=`echo ${LANG} | ${SED} 's/^.*\.//' | tr 'A-Z' 'a-z-'`
+
+SOAP_REQUEST="<?xml version=\"1.0\" encoding=\"$CHARSET\"?>
+<env:Envelope xmlns:env=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:ns=\"http://xml.m4u.com.au/2009\">
+ <env:Body>
+  <ns:sendMessages>
+   <ns:authentication>
+    <ns:userId>$MESSAGEMEDIA_USERID</ns:userId>
+    <ns:password>$MESSAGEMEDIA_PASSWORD</ns:password>
+   </ns:authentication>
+   <ns:requestBody>
+    <ns:messages"
+if [ -n "$SEND_MODE" ]; then
+    SOAP_REQUEST="$SOAP_REQUEST sendMode=\"$SEND_MODE\"";
+fi
+SOAP_REQUEST+=">
+"
+
+for MESSAGE in "${MESSAGES[@]}"; do
+    SOAP_REQUEST+="$MESSAGE"
+done
+
+SOAP_REQUEST+="    </ns:messages>
    </ns:requestBody>
   </ns:sendMessages>
  </env:Body>
