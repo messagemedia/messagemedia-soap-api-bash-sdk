@@ -34,7 +34,7 @@ while [ $# -gt 0 ]; do
         --help)
             showUsage
             ;;
-        --max-replies)
+        --max-replies|--maximum-replies)
             requireArg $1 $#
             MAXIMUM_REPLIES="$SAFE_ARG"
             shift
@@ -60,7 +60,7 @@ SOAP_REQUEST="<?xml version=\"1.0\" encoding=\"$CHARSET\"?>
    <ns:requestBody>"
 if [ -n "$MAXIMUM_REPLIES" ]; then
     SOAP_REQUEST="$SOAP_REQUEST
-    <ns:maximumReplies>$MAXIMUM_REPLIES<\ns:maximumReplies>"
+    <ns:maximumReplies>$MAXIMUM_REPLIES</ns:maximumReplies>"
 fi
 SOAP_REQUEST="$SOAP_REQUEST
    </ns:requestBody>
