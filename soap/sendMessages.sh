@@ -77,8 +77,8 @@ fi
 CHARSET=`echo ${LANG} | ${SED} 's/^.*\.//' | tr 'A-Z' 'a-z-'`
 
 SOAP_REQUEST="<?xml version=\"1.0\" encoding=\"$CHARSET\"?>
-<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:ns=\"http://xml.m4u.com.au/2009\">
- <soapenv:Body>
+<env:Envelope xmlns:env=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:ns=\"http://xml.m4u.com.au/2009\">
+ <env:Body>
   <ns:sendMessages>
    <ns:authentication>
     <ns:userId>$MESSAGEMEDIA_USERID</ns:userId>
@@ -157,8 +157,8 @@ SOAP_REQUEST="$SOAP_REQUEST
     </ns:messages>
    </ns:requestBody>
   </ns:sendMessages>
- </soapenv:Body>
-</soapenv:Envelope>"
+ </env:Body>
+</env:Envelope>"
 
 if [ -n "$HAVE_TRAILING_OPTIONS" ]; then
     echo -e "\nError: Found trailing options after the final message to be sent."
