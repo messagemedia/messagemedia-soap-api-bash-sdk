@@ -11,7 +11,7 @@
     <ns:messages>
      <ns:message format="SMS" sequenceNumber="0">
       <ns:recipients>
-       <ns:recipient uid="0">614123456789</ns:recipient>
+       <ns:recipient uid="0">61412345678</ns:recipient>
       </ns:recipients>
       <ns:content>Test message.</ns:content>
      </ns:message>

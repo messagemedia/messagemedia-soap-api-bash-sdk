@@ -9,8 +9,8 @@
    </ns:authentication>
    <ns:requestBody>
     <ns:recipients>
-     <ns:recipient uid="123">61987654321</ns:recipient>
-     <ns:recipient uid="456">614123456789</ns:recipient>
+     <ns:recipient uid="123">61498765432</ns:recipient>
+     <ns:recipient uid="456">61412345678</ns:recipient>
     </ns:recipients>
    </ns:requestBody>
   </ns:unblockNumbers>
