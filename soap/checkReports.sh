@@ -18,7 +18,7 @@ SED=`which sed`
 
 # Show a basic, standardise usage message.
 showUsage() {
-    echo -e "\nUsage: "`basename $0`" [--debug] [--dryrun] [--max-replies n]\n" >&2
+    echo -e "\nUsage: "`basename $0`" [--debug] [--dryrun] [--max-reports n]\n" >&2
     exit 128
 }
 
@@ -34,9 +34,9 @@ while [ $# -gt 0 ]; do
         --help)
             showUsage
             ;;
-        --max-replies)
+        --max-reports|--maximum-reports)
             requireArg $1 $#
-            MAXIMUM_REPLIES="$SAFE_ARG"
+            MAXIMUM_REPORTS="$SAFE_ARG"
             shift
             ;;
         *)
@@ -58,9 +58,9 @@ SOAP_REQUEST="<?xml version=\"1.0\" encoding=\"$CHARSET\"?>
     <ns:password>$MESSAGEMEDIA_PASSWORD</ns:password>
    </ns:authentication>
    <ns:requestBody>"
-if [ -n "$MAXIMUM_REPLIES" ]; then
+if [ -n "$MAXIMUM_REPORTS" ]; then
     SOAP_REQUEST="$SOAP_REQUEST
-    <ns:maximumReplies>$MAXIMUM_REPLIES<\ns:maximumReplies>"
+    <ns:maximumReports>$MAXIMUM_REPORTS</ns:maximumReports>"
 fi
 SOAP_REQUEST="$SOAP_REQUEST
    </ns:requestBody>
