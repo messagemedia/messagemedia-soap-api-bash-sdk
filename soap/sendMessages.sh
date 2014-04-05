@@ -68,6 +68,7 @@ while [ $# -gt 0 ]; do
         --format)
             requireArg
             requireOneOf "$1" "$2" SMS voice
+            MESSAGE_FORMAT="$2"
             shift
             ;;
         --help)
@@ -96,7 +97,7 @@ while [ $# -gt 0 ]; do
                 showUsage
             fi
             LF=$'\n'
-            MESSAGE="     <ns:message format=\"SMS\" sequenceNumber=\"$SEQUENCE_NUMBER\">$LF      <ns:recipients>$LF"
+            MESSAGE="     <ns:message format=\"$MESSAGE_FORMAT\" sequenceNumber=\"$SEQUENCE_NUMBER\">$LF      <ns:recipients>$LF"
             for RECIPIENT_ID in "${!RECIPIENTS[@]}"; do
                 MESSAGE+="       <ns:recipient uid=\"$RECIPIENT_ID\">${RECIPIENTS[$RECIPIENT_ID]}</ns:recipient>$LF"
             done
