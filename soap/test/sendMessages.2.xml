@@ -1,0 +1,45 @@
+
+<?xml version="1.0" encoding="utf-8"?>
+<env:Envelope xmlns:env="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns="http://xml.m4u.com.au/2009">
+ <env:Body>
+  <ns:sendMessages>
+   <ns:authentication>
+    <ns:userId>my-user-id</ns:userId>
+    <ns:password>my-password</ns:password>
+   </ns:authentication>
+   <ns:requestBody>
+    <ns:messages sendMode="dropAllWithSuccess">
+     <ns:message format="SMS" sequenceNumber="0">
+      <ns:recipients>
+       <ns:recipient uid="0">61412345678</ns:recipient>
+      </ns:recipients>
+      <ns:content>Test message 1.</ns:content>
+     </ns:message>
+     <ns:message format="voice" sequenceNumber="1">
+      <ns:recipients>
+       <ns:recipient uid="1000">61434567890</ns:recipient>
+       <ns:recipient uid="4321">61412345678</ns:recipient>
+       <ns:recipient uid="4322">61423456789</ns:recipient>
+      </ns:recipients>
+      <ns:deliveryReport>true</ns:deliveryReport>
+       <ns:tags>
+        <ns:tag name="tag1">value1</ns:tag>
+        <ns:tag name="tag2">value2</ns:tag>
+       </ns:tags>
+      <ns:validityPeriod>234</ns:validityPeriod>
+      <ns:content>Test message 2.</ns:content>
+     </ns:message>
+     <ns:message format="voice" sequenceNumber="2">
+      <ns:recipients>
+       <ns:recipient uid="4322">61412345678</ns:recipient>
+      </ns:recipients>
+      <ns:deliveryReport>true</ns:deliveryReport>
+      <ns:validityPeriod>234</ns:validityPeriod>
+      <ns:content>Test message 3.</ns:content>
+     </ns:message>
+    </ns:messages>
+   </ns:requestBody>
+  </ns:sendMessages>
+ </env:Body>
+</env:Envelope>
+
