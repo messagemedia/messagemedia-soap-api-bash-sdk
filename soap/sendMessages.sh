@@ -7,12 +7,9 @@
 #
 
 # @todo
-#   --recipient
 #   --scheduled
 #   --tag
 #   --validaity-period
-#   --content
-#   --endpoint
 
 . "$(dirname $(readlink -f $0))/auth.inc.sh"
 . "$(dirname $(readlink -f $0))/functions.inc.sh"
