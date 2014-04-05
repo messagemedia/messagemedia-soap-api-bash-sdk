@@ -7,9 +7,7 @@
 #
 
 # @todo
-#   --scheduled
 #   --tag
-#   --validaity-period
 
 . "$(dirname $(readlink -f $0))/auth.inc.sh"
 . "$(dirname $(readlink -f $0))/functions.inc.sh"
@@ -27,6 +25,7 @@ SED=`which sed`
 # Show a basic, standardise usage message.
 showUsage() {
     echo -e "\nUsage: "`basename $0`" options message\n" >&2
+    # @todo Add more usage details.
     exit 128
 }
 
@@ -79,9 +78,19 @@ while [ $# -gt 0 ]; do
             RECIPIENT_ID="$SAFE_ARG"
             shift
             ;;
+        --schedule|--scheduled)
+            requireArg $1 $#
+            SCHEDULED="$SAFE_ARG"
+            shift
+            ;;
         --send-mode)
             echo -e "\nError: If present, --sendMode must be the first option specified."
             showUsage
+            ;;
+        --validity-period)
+            requireArg $1 $#
+            VALIDITY_PERIOD="$SAFE_ARG"
+            shift
             ;;
         -t|--to|--recipient)
             requireArg $1 $#
@@ -103,7 +112,13 @@ while [ $# -gt 0 ]; do
             done
             MESSAGE+="      </ns:recipients>$LF"
             if [ -n "$DELIVERY_REPORT" ]; then
-                MESSAGE+="<ns:deliverReport>$DELIVERY_REPORT</ns:deliverReport>$LF"
+                MESSAGE+="      <ns:deliveryReport>$DELIVERY_REPORT</ns:deliveryReport>$LF"
+            fi
+            if [ -n "$SCHEDULED" ]; then
+                MESSAGE+="      <ns:scheduled>$SCHEDULED</ns:scheduled>$LF"
+            fi
+            if [ -n "$VALIDITY_PERIOD" ]; then
+                MESSAGE+="      <ns:validityPeriod>$VALIDITY_PERIOD</ns:validityPeriod>$LF"
             fi
             MESSAGE+="      <ns:content>$SAFE_ARG</ns:content>$LF     </ns:message>$LF"
             unset HAVE_TRAILING_OPTIONS
