@@ -78,7 +78,6 @@ CHARSET=`echo ${LANG} | ${SED} 's/^.*\.//' | tr 'A-Z' 'a-z-'`
 
 SOAP_REQUEST="<?xml version=\"1.0\" encoding=\"$CHARSET\"?>
 <soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:ns=\"http://xml.m4u.com.au/2009\">
- <soapenv:Header/>
  <soapenv:Body>
   <ns:sendMessages>
    <ns:authentication>
