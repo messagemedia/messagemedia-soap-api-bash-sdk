@@ -31,6 +31,11 @@ while [ $# -gt 0 ]; do
         --dryrun|--dry-run)
             DRYRUN=true
             ;;
+        --endpoint)
+            requireArg $1 $#
+            ENDPOINT="$2"
+            shift
+            ;;
         --help)
             showUsage
             ;;

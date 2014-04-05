@@ -7,6 +7,7 @@
 #
 
 . "$(dirname $(readlink -f $0))/auth.inc.sh"
+. "$(dirname $(readlink -f $0))/functions.inc.sh"
 
 # Some defaults.
 ENDPOINT='https://soap.m4u.com.au'
@@ -28,6 +29,11 @@ while [ $# -gt 0 ]; do
             ;;
         --dryrun|--dry-run)
             DRYRUN=true
+            ;;
+        --endpoint)
+            requireArg $1 $#
+            ENDPOINT="$2"
+            shift
             ;;
         --help)
             showUsage
