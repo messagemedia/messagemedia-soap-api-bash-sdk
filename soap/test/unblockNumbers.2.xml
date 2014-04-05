@@ -1,0 +1,19 @@
+
+<?xml version="1.0" encoding="utf-8"?>
+<env:Envelope xmlns:env="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns="http://xml.m4u.com.au/2009">
+ <env:Body>
+  <ns:unblockNumbers>
+   <ns:authentication>
+    <ns:userId>my-user-id</ns:userId>
+    <ns:password>my-password</ns:password>
+   </ns:authentication>
+   <ns:requestBody>
+    <ns:recipients>
+     <ns:recipient uid="123">61987654321</ns:recipient>
+     <ns:recipient uid="456">614123456789</ns:recipient>
+    </ns:recipients>
+   </ns:requestBody>
+  </ns:unblockNumbers>
+ </env:Body>
+</env:Envelope>
+

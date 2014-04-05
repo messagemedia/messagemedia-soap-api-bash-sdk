@@ -1,0 +1,20 @@
+
+<?xml version="1.0" encoding="utf-8"?>
+<env:Envelope xmlns:env="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns="http://xml.m4u.com.au/2009">
+ <env:Body>
+  <ns:confirmReplies>
+   <ns:authentication>
+    <ns:userId>my-user-id</ns:userId>
+    <ns:password>my-password</ns:password>
+   </ns:authentication>
+   <ns:requestBody>
+    <ns:replies>
+     <ns:reply receiptId="123"/>
+     <ns:reply receiptId="456"/>
+     <ns:reply receiptId="789"/>
+    </ns:replies>
+   </ns:requestBody>
+  </ns:confirmReplies>
+ </env:Body>
+</env:Envelope>
+

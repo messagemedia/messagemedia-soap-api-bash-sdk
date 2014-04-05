@@ -1,0 +1,13 @@
+
+<?xml version="1.0" encoding="utf-8"?>
+<env:Envelope xmlns:env="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns="http://xml.m4u.com.au/2009">
+ <env:Body>
+  <ns:checkUser>
+   <ns:authentication>
+    <ns:userId>my-user-id</ns:userId>
+    <ns:password>my-password</ns:password>
+   </ns:authentication>
+  </ns:checkUser>
+ </env:Body>
+</env:Envelope>
+
