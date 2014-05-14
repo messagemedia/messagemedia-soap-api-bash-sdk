@@ -220,6 +220,12 @@ while [ $# -gt 0 ]; do
     shift
 done
 
+# Make sure we have at least one message to include in the request.
+if [ ${#MESSAGES[@]} -eq 0 ]; then
+    echo -e "\nError: No message(s) to send."
+    showUsage
+fi
+
 CHARSET=`echo ${LANG} | ${SED} 's/^.*\.//' | tr 'A-Z' 'a-z-'`
 
 SOAP_REQUEST="<?xml version=\"1.0\" encoding=\"$CHARSET\"?>
