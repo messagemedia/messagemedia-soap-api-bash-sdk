@@ -66,7 +66,7 @@ the message content (either --content or --message).  Multiple messages may be
 specified this way, with each message ending with either --content or --message
 option.  For example:
 
-... --to 123 --to 456 --message "Hi Bob & Alice" --to 789 --message "Hi Charlie"
+... --to 123 --to 456 --message "Hi Alice & Bob" --to 789 --message "Hi Charlie"
 
 The following options affect all subsequent messages:
   -f [--from] arg        Set the origin address for source number masking.
