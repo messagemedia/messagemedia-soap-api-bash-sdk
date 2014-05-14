@@ -31,7 +31,7 @@ requireArg() {
 # Require a command line argument be one of a set of values.
 # @param  $1  Option name.
 # @param  $2  Argument value.
-# @param  $@  Allows options.
+# @param  $@  Allowed options.
 requireOneOf() {
     OPTION_NAME="$1"
     OPTION_ARG="$2"
@@ -41,5 +41,5 @@ requireOneOf() {
         shift
     done
     echo -e "\nError: Option '$OPTION_NAME' does not accept the parameter '$OPTION_ARG'." >&2
-    return 1
+    showUsage
 }
