@@ -18,7 +18,7 @@
 #
 # Example shell script for confirming delivery reports via MessageMedia's SOAP API.
 #
-# Usage: confirmReports.sh [--debug] [--dryrun] id1 [id2 [... [idn]]]
+# Usage: confirmReports.sh [--debug] [--dryrun] receiptId1 [receiptId2 [...]]
 #
 # Run with --help for additional information, or see the accompanying
 # README.md file.
@@ -36,7 +36,7 @@ SED=`which sed`
 
 # Show a basic, standardise usage message.
 showUsage() {
-    echo -e "\nUsage: "`basename $0`" [--debug] [--dryrun] id1 [id2 [... [idn]]]\n" >&2
+    echo -e "\nUsage: "`basename $0`" [--debug] [--dryrun] receiptId1 [receiptId2 [...]]\n" >&2
     exit 128
 }
 
