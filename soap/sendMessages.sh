@@ -18,8 +18,10 @@
 #
 # Example shell script for sending SMS messages via MessageMedia's SOAP API.
 #
-# Run with --help for basic usage.  See the accompanying README.md file for
-# detailed usage information.
+# Usage: sendMessages.sh [--send-mode MODE] [global-options] message [message [...]]
+#
+# Run with --help for additional information, or see the accompanying
+# README.md file.
 #
 
 . "$(dirname $(readlink -f $0))/auth.inc.sh"

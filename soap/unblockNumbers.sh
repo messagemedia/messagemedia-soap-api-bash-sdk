@@ -18,8 +18,10 @@
 #
 # Example shell script for unblocking numbers via MessageMedia's SOAP API.
 #
-# Run with --help for basic usage.  See the accompanying README.md file for
-# detailed usage information.
+# Usage: unblockNumbers.sh [options] phone1 [phone2 [...]]
+#
+# Run with --help for additional information, or see the accompanying
+# README.md file.
 #
 
 . "$(dirname $(readlink -f $0))/auth.inc.sh"

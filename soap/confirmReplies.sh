@@ -18,8 +18,10 @@
 #
 # Example shell script for confirming replies via MessageMedia's SOAP API.
 #
-# Run with --help for basic usage.  See the accompanying README.md file for
-# detailed usage information.
+# Usage: confirmReplies.sh [--debug] [--dryrun] id1 [id2 [... [idn]]]
+#
+# Run with --help for additional information, or see the accompanying
+# README.md file.
 #
 
 . "$(dirname $(readlink -f $0))/auth.inc.sh"
