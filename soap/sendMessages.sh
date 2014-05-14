@@ -37,8 +37,64 @@ SED=`which sed`
 
 # Show a basic, standardise usage message.
 showUsage() {
-    echo -e "\nUsage: "`basename $0`" options message\n" >&2
-    # @todo Add more usage details.
+    echo -e "\nUsage: "`basename $0`" [--send-mode MODE] [global-options] message [message [...]]" >&2
+    echo '
+Send modes:
+  dropAll             request the server drop (not send) the requested messages,
+                      and return a result indicating that messages were sent /
+                      scheduled successfully or failed to send at random.
+  dropAllWithError    request the server drop (not send) the requested messages,
+                      and return a result indicating that all messages failed to
+                      send.
+  dropAllWithSuccess  request the server drop (not send) the requested messages,
+                      but return a result indicating all messages were sent /
+                      scheduled successfully.
+  normal              send the requested messages as normal.
+
+  If not specified, the server defaults the send mode to "normal".
+
+Global options:
+  --debug         Enable debug output, such as the content of the SOAP request.
+  --dryrun        Do everything up to, but not including, sending the request.' >&2
+    echo "  --endpoint (=$ENDPOINT)  SOAP endpoint to send requests to." >&2
+    echo '  --help          Display this message then exit.
+
+Each `message` consists of a series of options, of which the final option is the
+the message content (either --content or --message).  Multiple messages may be
+specified this way, with each message ending with either --content or --message
+option.  For example:
+
+... --to 123 --to 456 --message "Hi Bob & Alice" --to 789 --message "Hi Charlie"
+
+The following options affect all subsequent messages:
+  -f [--from] arg        Set the origin address for source number masking.
+  --format arg           Set the message format; must be either "SMS" or "voice".
+  --receipient-id arg    Set the ID for the subsequent recipeint address.
+  --schedule arg         Schedule the message for future delivery; arg must be a
+                         valid XSD dateTime, such as "2014-05-14T12:30:00".
+  --scheduled arg        Same as --schedule.
+  --source arg           Same as --from.
+  --validity-period arg  Message validity period, from 0 to 255.
+
+The following options affect only the current message:
+  --tag arg1 arg2        Tag this message with name `arg1` and value `arg2`.
+  -t [--to] arg          Add a recipient address to the message.
+  --recipient            Same as --to.
+
+Finally, the message content is specified by either:
+  -c [--content]         Set the message content.
+  -m [--message]         Same as --content.
+
+Basic example:
+  sendMessages.sh -t 61412345678 -m 'Hi there'
+
+Advanced example:
+  sendMessages.sh --send-mode dropAllWithErrors --debug --dryrun \
+    --from 131313 --scheduled "2014-05-14T12:30:00"
+    --to 61412345678 --to 61423456789 -m "Basic message to two numbers." \
+    --recipient-id 789 --to 61487654321 -m "Message with explicit recipient ID." \
+    --tag foo bar --to 61498765432 -m "Message with arbitraray tag: foo=bar"
+' >&2
     exit 128
 }
 
