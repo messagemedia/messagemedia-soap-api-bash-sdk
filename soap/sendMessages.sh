@@ -89,8 +89,8 @@ Basic example:
   sendMessages.sh -t 61412345678 -m 'Hi there'
 
 Advanced example:
-  sendMessages.sh --send-mode dropAllWithErrors --debug --dryrun \
-    --from 131313 --scheduled "2014-05-14T12:30:00"
+  sendMessages.sh --send-mode dropAllWithSuccess --debug --dryrun \
+    --from 131313 --scheduled "2014-05-14T12:30:00" \
     --to 61412345678 --to 61423456789 -m "Basic message to two numbers." \
     --recipient-id 789 --to 61487654321 -m "Message with explicit recipient ID." \
     --tag foo bar --to 61498765432 -m "Message with arbitraray tag: foo=bar"
