@@ -71,6 +71,7 @@ option.  For example:
 The following options affect all subsequent messages:
   -f [--from] arg        Set the origin address for source number masking.
   --format arg           Set the message format; must be either "SMS" or "voice".
+  --origin arg           Same as --from.
   --recipient-id arg     Set the ID for the subsequent recipeint address.
   --schedule arg         Schedule the message for future delivery; arg must be a
                          valid XSD dateTime, such as "2014-05-14T12:30:00".
@@ -130,9 +131,9 @@ while [ $# -gt 0 ]; do
             ENDPOINT="$2"
             shift
             ;;
-        -f|--from|--source)
+        -f|--from|--origin|--source)
             requireArg $1 $#
-            SOURCE="$SAFE_ARG"
+            ORIGIN="$SAFE_ARG"
             shift
             ;;
         --format)
@@ -183,7 +184,11 @@ while [ $# -gt 0 ]; do
                 showUsage
             fi
             LF=$'\n'
-            MESSAGE="     <ns:message format=\"$MESSAGE_FORMAT\" sequenceNumber=\"$SEQUENCE_NUMBER\">$LF      <ns:recipients>$LF"
+            MESSAGE="     <ns:message format=\"$MESSAGE_FORMAT\" sequenceNumber=\"$SEQUENCE_NUMBER\">$LF"
+            if [ -n "$ORIGIN" ]; then
+                MESSAGE+="      <ns:origin>$ORIGIN</ns:origin>$LF"
+            fi
+            MESSAGE+="      <ns:recipients>$LF"
             for RECIPIENT_ID in "${!RECIPIENTS[@]}"; do
                 MESSAGE+="       <ns:recipient uid=\"$RECIPIENT_ID\">${RECIPIENTS[$RECIPIENT_ID]}</ns:recipient>$LF"
             done
