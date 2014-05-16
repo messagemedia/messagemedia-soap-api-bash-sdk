@@ -89,7 +89,7 @@ Finally, the message content is specified by either:
   -m [--message]         Same as --content.
 
 Basic example:
-  sendMessages.sh -t 61412345678 -m 'Hi there'
+  sendMessages.sh -t 61412345678 -m "Hi there"
 
 Advanced example:
   sendMessages.sh --send-mode dropAllWithSuccess --debug --dryrun \
