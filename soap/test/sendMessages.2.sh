@@ -1,5 +1,6 @@
 MESSAGEMEDIA_USERID=my-user-id MESSAGEMEDIA_PASSWORD=my-password \
-    ../sendMessages.sh --send-mode dropAllWithSuccess --debug --dryrun \
+    $(dirname $(readlink --canonicalize "$0"))/../sendMessages.sh \
+    --send-mode dropAllWithSuccess --debug --dryrun \
     --to 61412345678 --message 'Test message 1.' \
     --delivery-report --from 614098765432 --format voice \
     --recipient-id 4321 --to 61412345678 --to 61423456789 \

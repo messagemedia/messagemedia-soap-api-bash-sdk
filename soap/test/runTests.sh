@@ -15,21 +15,23 @@
 # limitations under the License.
 #
 
+TEST_DIR=$(dirname $(readlink --canonicalize "$0"))
+
 DIFF=`which colordiff`
 if [ -z "$DIFF" ]; then DIFF=`which diff`; fi
 
 if [ $# -gt 0 ]; then
     TESTS=( $@ )
 else
-    TESTS=( `find . -name '*.sh' ! -name 'runTests.sh'` )
+    TESTS=( `find "$TEST_DIR" -name '*.sh' ! -name 'runTests.sh'` )
 fi
 
 PASSED=0
 for TEST in "${TESTS[@]}"; do
     TEST=`basename "$TEST" .sh`
     echo -n "Test: $TEST"
-    "./$TEST.sh" > "/tmp/soap.$TEST.xml"
-    OUTPUT=`"$DIFF" "$TEST.xml" "/tmp/soap.$TEST.xml"`
+    "$TEST_DIR/$TEST.sh" > "/tmp/soap.$TEST.xml"
+    OUTPUT=`"$DIFF" "$TEST_DIR/$TEST.xml" "/tmp/soap.$TEST.xml"`
     if [ $? -eq 0 ]; then
         echo -e ' \x1b[32mpassed\x1b[0m'
         PASSED=$(( $PASSED + 1))
