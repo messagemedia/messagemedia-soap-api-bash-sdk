@@ -1,0 +1,1 @@
+script: ./soap/test/runTests.sh
