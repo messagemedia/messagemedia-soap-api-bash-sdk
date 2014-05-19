@@ -70,8 +70,11 @@ option.  For example:
 
 The following options affect all subsequent messages:
   -f [--from] arg        Set the origin address for source number masking.
+                         (Contact MessageMedia Support to enable)
   --format arg           Set the message format; must be either "SMS" or "voice".
   --origin arg           Same as --from.
+  --delivery-report arg  Enable message delivery tracking; must be either "true" or
+                         "false". (Charges may apply)
   --recipient-id arg     Set the ID for the subsequent recipeint address.
   --schedule arg         Schedule the message for future delivery; arg must be a
                          valid XSD dateTime, such as "2014-05-14T12:30:00".

@@ -14,5 +14,7 @@ See the [README.md](soap/README.md) file in [soap](soap) directory for details.
 Please ensure Curl is installed and you may need to modify the EOL behaviour in Cygwin
 by setting the following in your .bash_profile:
 
+```bash
 export SHELLOPTS
 set -o igncr
+```
