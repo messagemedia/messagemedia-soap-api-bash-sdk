@@ -70,8 +70,11 @@ option.  For example:
 
 The following options affect all subsequent messages:
   -f [--from] arg        Set the origin address for source number masking.
+                         (Contact MessageMedia Support to enable)
   --format arg           Set the message format; must be either "SMS" or "voice".
   --origin arg           Same as --from.
+  --delivery-report arg  Enable message delivery tracking; must be either "true" or
+                         "false". (Charges may apply)
   --recipient-id arg     Set the ID for the subsequent recipeint address.
   --schedule arg         Schedule the message for future delivery; arg must be a
                          valid XSD dateTime, such as "2014-05-14T12:30:00".
@@ -89,13 +92,14 @@ Finally, the message content is specified by either:
   -m [--message]         Same as --content.
 
 Basic example:
-  sendMessages.sh -t 61412345678 -m 'Hi there'
+  sendMessages.sh -t 61412345678 -m "Hi there"
 
 Advanced example:
   sendMessages.sh --send-mode dropAllWithSuccess --debug --dryrun \
     --from 131313 --scheduled "2014-05-14T12:30:00" \
     --to 61412345678 --to 61423456789 -m "Basic message to two numbers." \
-    --recipient-id 789 --to 61487654321 -m "Message with explicit recipient ID." \
+    --delivery-report true --recipient-id 789 \
+    --to 61487654321 -m "Message with explicit recipient ID." \
     --tag foo bar --to 61498765432 -m "Message with arbitraray tag: foo=bar"
 ' >&2
     exit 128
