@@ -10,11 +10,18 @@ The [soap](soap) directory contains sample code for accessing MessageMedia's
 
 See the [README.md](soap/README.md) file in [soap](soap) directory for details.
 
-### Cygwin on Windows
-Please ensure Curl is installed and you may need to modify the EOL behaviour in Cygwin
-by setting the following in your .bash_profile:
+### Requirements
+* [Bash]
+* [curl] 7.2+
+
+#### Cygwin on Windows
+Please ensure [curl] is installed and you may need to modify the EOL behaviour
+in Cygwin by setting the following in your `.bash_profile`:
 
 ```bash
 export SHELLOPTS
 set -o igncr
 ```
+
+[Bash]: http://www.gnu.org/software/bash/ "GNU Bash"
+[curl]: http://curl.haxx.se/ "curl and libcurl"
