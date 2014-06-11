@@ -77,7 +77,7 @@ The following options affect all subsequent messages:
                          Enable message delivery tracking; if arg is specified,
                          it must be either "true" or "false", otherwise "true"
                          is implied. (Charges may apply)
-  --recipient-id arg     Set the ID for the subsequent recipeint address.
+  --recipient-id arg     Set the ID for the subsequent recipient address.
   --schedule arg         Schedule the message for future delivery; arg must be a
                          valid XSD dateTime, such as "2014-05-14T12:30:00".
   --scheduled arg        Same as --schedule.
