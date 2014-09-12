@@ -1,3 +1,5 @@
 language: bash
 
-script: ./soap/test/runTests.sh
+script:
+  - find . -name *.sh | xargs -I{} bash -n {}
+  - ./soap/test/runTests.sh
