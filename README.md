@@ -1,10 +1,9 @@
 # MessageMedia Bash SDK
-
 This library provides a simple interface for sending and receiving messages using the [MessageMedia SOAP API](http://www.messagemedia.com.au/wp-content/uploads/2013/05/MessageMedia_Messaging_Web_Service.pdf?eacfbb).
 
 If you have any issue using this sample code, or would like to report a defect, you could [create a new Issue](https://github.com/messagemedia/messagemedia-bash/issues/new) in Github or [Contact us](http://www.messagemedia.com.au/contact-us).
 
-## Installation:
+## Installation
 ### Requirements
 * [Bash]
 * [curl] 7.2+
@@ -21,9 +20,8 @@ set -o igncr
 [Bash]: http://www.gnu.org/software/bash/ "GNU Bash"
 [curl]: http://curl.haxx.se/ "curl and libcurl"
 
-## Usage:
+## Usage
 ### Authentication
-
 In the interest of security, these scripts do not accept credentials via
 command line options, as those would be visible in process lists.  Instead
 credentials can be provided via the following environment variables:
@@ -41,7 +39,6 @@ If the credentials are not provided via the environment, then the scripts
 will prompt for them instead.
 
 ### Common Command Line Options
-
 The following command line options are common to all of these sample scripts:
 
 | Options      | Arguments | Description |
@@ -52,7 +49,6 @@ The following command line options are common to all of these sample scripts:
 | `--help`     |           | Show some usage information. |
 
 ### checkUser
-
 checkUser is one of the most basic API requests.
 
 Exmaple using `checkUser.sh` to check authentication, credits, etc:
@@ -83,7 +79,6 @@ $ MESSAGEMEDIA_USERID=my-user-id MESSAGEMEDIA_PASSWORD=my-password ./checkUser.s
 ```
 
 ## Contributing
-
 We welcome contributions from our users. Contributing is easy:
 
   1.  Fork this repo
