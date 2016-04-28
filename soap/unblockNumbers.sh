@@ -24,8 +24,8 @@
 # README.md file.
 #
 
-. "$(dirname $(readlink -f $0))/auth.inc.sh"
-. "$(dirname $(readlink -f $0))/functions.inc.sh"
+. "$(dirname "$(readlink -f $0)")/auth.inc.sh"
+. "$(dirname "$(readlink -f $0)")/functions.inc.sh"
 
 # Some defaults.
 ENDPOINT='https://soap.m4u.com.au'
